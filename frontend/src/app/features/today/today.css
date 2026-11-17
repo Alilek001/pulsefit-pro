@@ -1,0 +1,59 @@
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+.head p { margin: 0; color: var(--ink2); }
+.head h1 { margin: 6px 0 0; font-size: clamp(34px, 4vw, 48px); line-height: 1; letter-spacing: -.03em; font-weight: 800; }
+.head-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.summary { display: flex; flex-wrap: wrap; margin-bottom: 24px; }
+.summary div { flex: 1 1 180px; padding: 4px 24px 4px 0; margin-right: 24px; border-right: 1px solid var(--line); }
+.summary div:last-child { border: 0; }
+.summary b { display: block; font-size: 44px; line-height: 1; font-weight: 700; letter-spacing: -.03em; }
+.summary span { color: var(--ink2); font-size: 15px; }
+
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.attention { grid-column: span 8; align-self: stretch; }
+.money { grid-column: span 4; align-self: stretch; display: flex; flex-direction: column; }
+.checkins { grid-column: span 5; }
+.feed { grid-column: span 7; }
+
+.rows { list-style: none; margin: 0; padding: 0; }
+.row { display: grid; grid-template-columns: 48px minmax(0, 1fr) 150px; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; padding-top: 4px; }
+.row > .btn { width: 100%; }
+.ring-av { width: 34px; height: 34px; font-size: 12px; }
+.who { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; }
+.who span:not(.tag) { color: var(--ink2); font-size: 14px; }
+
+.big-money { font-size: 52px; font-weight: 700; letter-spacing: -.04em; line-height: 1; margin: 10px 0 4px; }
+.of { margin: 0; color: var(--ink2); }
+.bar { height: 8px; border-radius: 99px; background: var(--chalk); overflow: hidden; margin: 16px 0 4px; }
+.bar i { display: block; height: 100%; background: var(--violet); border-radius: 99px; transition: width 1.2s cubic-bezier(.2, .7, .2, 1); }
+.income-chart { flex: 1; min-height: 150px; margin-top: 8px; }
+
+.ci { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 16px; align-items: start; padding: 14px 0; border-top: 1px solid var(--line); }
+.ci:first-of-type { border-top: 0; padding-top: 0; }
+.ci .av, .post-head .av { justify-self: center; }
+.ci p { margin: 4px 0 0; color: var(--ink2); font-size: 14px; line-height: 1.45; }
+.delta { font-weight: 700; font-size: 15px; }
+.delta.down { color: var(--ok); }
+.delta.up { color: var(--risk); }
+
+.post { padding: 18px 0; border-top: 1px solid var(--line); }
+.post:first-of-type { border-top: 0; padding-top: 0; }
+.post-head { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 16px; align-items: center; }
+.post-head small { display: block; color: var(--ink2); }
+.post-body { margin-left: 64px; }
+.post h3 { margin: 12px 0 10px; font-size: 20px; letter-spacing: -.02em; }
+.stats { display: flex; gap: 28px; flex-wrap: wrap; margin: 0; }
+.stats dt { color: var(--ink2); font-size: 13px; }
+.stats dd { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+.mini-chart { height: 96px; margin: 10px 0; }
+
+@media (max-width: 1100px) {
+  .attention, .money, .checkins, .feed { grid-column: 1 / -1; }
+}
+@media (max-width: 620px) {
+  .row { grid-template-columns: 48px minmax(0, 1fr); }
+  .row > .btn { grid-column: 2; width: auto; justify-self: start; }
+  .post-body { margin-left: 0; }
+  .summary div { border: 0; margin: 0 0 12px; }
+}

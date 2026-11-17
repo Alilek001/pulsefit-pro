@@ -1,0 +1,91 @@
+/*
+ * Estilos globales de PulseFit Pro.
+ * Aquí viven los tokens de diseño (colores, radios) y las piezas que se repiten
+ * en muchas pantallas: paneles, botones, avatares y etiquetas de estado.
+ * Lo específico de cada pantalla va en el CSS de su componente.
+ */
+:root {
+  /* Entrenador: tema claro */
+  --chalk: #EEF0EC;
+  --paper: #FFFFFF;
+  --ink: #16181B;
+  --ink2: #575D66;
+  --line: #DCDFD9;
+  --violet: #4F35E8;
+  --violet-hover: #3F27D1;
+  --violet-soft: #ECE9FF;
+
+  /* Estados del cliente: se distinguen también por claridad, no solo por color */
+  --ok: #157A43;      --ok-soft: #DDF3E5;
+  --warn: #9A5B00;    --warn-soft: #FCEFD6;
+  --risk: #BE3A31;    --risk-soft: #FBE3E0;
+
+  /* Cliente (móvil): tema oscuro */
+  --night: #15131D;
+  --night2: #211E2C;
+  --night3: #2C2839;
+  --moon: #F2F0F7;
+  --moon2: #B1ACC0;
+  --lilac: #A497FF;
+
+  --radius-l: 20px;
+  --radius-m: 14px;
+  --radius-s: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: 'Archivo Variable', system-ui, sans-serif; /* servida desde la propia app (Fontsource) */
+  font-variation-settings: "wdth" 100;
+  color: var(--ink);
+  background: var(--chalk);
+  -webkit-font-smoothing: antialiased;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; border-radius: 6px; }
+
+.num { font-variant-numeric: tabular-nums; }
+.wide { font-variation-settings: "wdth" 125; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Botones */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 0 16px; border-radius: var(--radius-s);
+  border: 1px solid transparent; font-weight: 650; font-size: 15px; white-space: nowrap;
+  text-decoration: none;
+}
+.btn svg { width: 20px; height: 20px; }
+.btn-primary { background: var(--violet); color: #fff; }
+.btn-primary:hover { background: var(--violet-hover); }
+.btn-primary:disabled { opacity: .6; cursor: progress; }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { background: #E9ECE6; }
+
+/* Paneles */
+.panel { background: var(--paper); border-radius: var(--radius-l); padding: 22px; }
+.panel h2 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+.panel .sub { margin: 4px 0 0; color: var(--ink2); font-size: 14px; }
+.panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+
+/* Avatares con iniciales */
+.av {
+  width: 44px; height: 44px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; font-weight: 700; font-size: 14px;
+}
+
+/* Etiquetas de estado */
+.tag {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
+  font-size: 13px; font-weight: 650; line-height: 1.3; border-radius: 999px; padding: 3px 10px;
+}
+.tag svg { width: 14px; height: 14px; }
+.tag.ok { background: var(--ok-soft); color: var(--ok); }
+.tag.warn { background: var(--warn-soft); color: var(--warn); }
+.tag.risk { background: var(--risk-soft); color: var(--risk); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

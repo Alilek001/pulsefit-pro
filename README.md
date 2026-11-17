@@ -9,7 +9,7 @@ Plataforma para entrenadores personales: gestionan a sus clientes, les asignan p
 | Parte | Tecnología |
 |---|---|
 | Backend | PHP 8.4, Laravel 13, Sanctum (tokens), PostgreSQL |
-| Frontend | Angular (componentes standalone, signals), TypeScript estricto |
+| Frontend | Angular 22 (componentes standalone, signals, carga diferida), TypeScript estricto |
 | Gráficas y animación | ECharts, GSAP |
 | Despliegue | Docker (Render) · Vercel |
 
@@ -33,10 +33,23 @@ php artisan serve
 
 La cuenta de administrador de la demo no tiene contraseña pública: defínela con la variable `ADMIN_PASSWORD` antes de ejecutar el seeder.
 
+## Arrancar el frontend en local
+
+```bash
+cd frontend
+npm install
+npm start   # http://localhost:4200
+```
+
+Cómo está organizado y qué hace cada pieza: [docs/GUIA-ANGULAR.md](docs/GUIA-ANGULAR.md).
+
 ## Hoja de ruta
 
 - [x] Revisión de seguridad de la API heredada (permisos de admin, recetas por usuario, control del nivel Élite)
-- [ ] Frontend en Angular con el nuevo diseño
+- [x] Base del frontend en Angular: login con Sanctum, interceptor, guards y diseño nuevo
+- [x] Panel del entrenador «Hoy» (con datos de ejemplo hasta tener los endpoints)
+- [ ] Ficha del cliente
+- [ ] App del cliente (móvil)
 - [ ] Roles de entrenador y cliente (multi-tenant por entrenador)
 - [ ] Programas asignables y check-ins semanales
 - [ ] Chat entrenador–cliente

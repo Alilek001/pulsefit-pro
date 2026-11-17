@@ -1,0 +1,115 @@
+<header class="head">
+  <div>
+    <p>{{ today }}</p>
+    <h1>{{ greeting }}, {{ firstName() }}</h1>
+  </div>
+  <div class="head-actions">
+    <button class="btn btn-ghost" type="button"><svg lucideUserPlus></svg>Invitar cliente</button>
+    <button class="btn btn-primary" type="button"><svg lucidePlus></svg>Nuevo programa</button>
+  </div>
+</header>
+
+@if (data(); as d) {
+  <section class="summary" aria-label="Resumen de hoy">
+    <div><b class="num" [pfCountUp]="d.summary.activeClients"></b><span>clientes activos</span></div>
+    <div><b class="num" [pfCountUp]="d.summary.trainingToday"></b><span>entrenan hoy</span></div>
+    <div><b class="num" [pfCountUp]="d.summary.pendingCheckins"></b><span>check-ins por revisar</span></div>
+    <div><b class="num" [pfCountUp]="d.summary.weeklyCompliance" suffix=" %"></b><span>sesiones cumplidas esta semana</span></div>
+  </section>
+
+  <div class="grid">
+    <section class="panel attention" aria-labelledby="att-h">
+      <div class="panel-head">
+        <div>
+          <h2 id="att-h">Necesitan tu atención</h2>
+          <p class="sub">Ordenado por urgencia.</p>
+        </div>
+        <button class="btn btn-ghost" type="button">Ver todos</button>
+      </div>
+      <ul class="rows">
+        @for (a of d.attention; track a.clientId; let i = $index) {
+          <li class="row">
+            <pf-ring [score]="a.readiness" [state]="a.state" [size]="48" [delay]="i * 0.15">
+              <span class="av ring-av" [style.background]="tone(a.clientId)[0]" [style.color]="tone(a.clientId)[1]">{{ initials(a.name) }}</span>
+            </pf-ring>
+            <div class="who">
+              <strong>{{ a.name }}</strong>
+              <span>{{ a.reason }}</span>
+              <span class="tag" [class]="a.state">
+                @switch (a.kind) {
+                  @case ('inactive') { <svg lucideClock></svg> }
+                  @case ('payment') { <svg lucideWallet></svg> }
+                  @case ('injury') { <svg lucideTriangleAlert></svg> }
+                  @case ('readiness') { <svg lucideMoon></svg> }
+                }
+                {{ a.tag }}
+              </span>
+            </div>
+            <button class="btn btn-ghost" type="button">
+              @switch (a.kind) {
+                @case ('inactive') { Escribir }
+                @case ('payment') { Recordar pago }
+                @case ('injury') { Ver check-in }
+                @case ('readiness') { Ajustar sesión }
+              }
+            </button>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="panel money" aria-labelledby="money-h">
+      <h2 id="money-h">Cobrado este mes</h2>
+      <div class="big-money num wide" [pfCountUp]="d.income.collected" format="eur"></div>
+      <p class="of num">de {{ euros(d.income.expected) }} previstos</p>
+      <div class="bar" role="progressbar" aria-label="Cobrado sobre lo previsto"
+        [attr.aria-valuenow]="incomePercent(d.income)" aria-valuemin="0" aria-valuemax="100">
+        <i [style.width.%]="incomePercent(d.income)"></i>
+      </div>
+      <p class="sub">{{ d.income.pendingNote }}</p>
+      @if (incomeChart(); as opt) {
+        <pf-chart class="income-chart" [option]="opt" label="Ingresos de los últimos seis meses" />
+      }
+    </section>
+
+    <section class="panel checkins" aria-labelledby="ci-h">
+      <div class="panel-head">
+        <div><h2 id="ci-h">Check-ins de la semana</h2><p class="sub">Peso y cómo se sienten</p></div>
+      </div>
+      @for (c of d.checkins; track c.clientId) {
+        <div class="ci">
+          <span class="av" [style.background]="tone(c.clientId)[0]" [style.color]="tone(c.clientId)[1]">{{ initials(c.name) }}</span>
+          <div>
+            <strong>{{ c.name }}</strong>
+            <p>«{{ c.quote }}»</p>
+          </div>
+          <span class="delta num" [class.down]="c.weightDelta < 0" [class.up]="c.weightDelta > 0">{{ formatDelta(c.weightDelta) }}</span>
+        </div>
+      }
+    </section>
+
+    <section class="panel feed" aria-labelledby="feed-h">
+      <div class="panel-head">
+        <div><h2 id="feed-h">Actividad reciente</h2><p class="sub">Lo que han entrenado tus clientes</p></div>
+      </div>
+      @for (a of d.activity; track a.id) {
+        <article class="post">
+          <div class="post-head">
+            <span class="av" [style.background]="tone(a.clientId)[0]" [style.color]="tone(a.clientId)[1]">{{ initials(a.name) }}</span>
+            <div><strong>{{ a.name }}</strong><small>{{ a.when }}</small></div>
+          </div>
+          <div class="post-body">
+            <h3>{{ a.title }}</h3>
+            <dl class="stats">
+              @for (s of a.stats; track s.label) {
+                <div><dt>{{ s.label }}</dt><dd class="num">{{ s.value }}</dd></div>
+              }
+            </dl>
+            <pf-chart class="mini-chart" [option]="activityCharts().get(a.id)!" [label]="chartLabel(a)" />
+            <pf-kudos-button [initial]="a.kudos" />
+          </div>
+        </article>
+      }
+    </section>
+  </div>
+}

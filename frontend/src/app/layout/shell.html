@@ -1,0 +1,32 @@
+<div class="app">
+  <aside class="side">
+    <pf-logo class="brand" />
+    <nav aria-label="Principal">
+      <a routerLink="/hoy" routerLinkActive="active" ariaCurrentWhenActive="page">
+        <svg lucideSun></svg>Hoy
+      </a>
+      <!-- Secciones que llegan en las próximas iteraciones -->
+      <span class="soon"><svg lucideUsers></svg>Clientes<small>Pronto</small></span>
+      <span class="soon"><svg lucideDumbbell></svg>Programas<small>Pronto</small></span>
+      <span class="soon"><svg lucideClipboardCheck></svg>Check-ins<small>Pronto</small></span>
+      <span class="soon"><svg lucideMessageCircle></svg>Mensajes<small>Pronto</small></span>
+      <span class="soon"><svg lucideWallet></svg>Cobros<small>Pronto</small></span>
+      <span class="soon"><svg lucideSettings></svg>Ajustes<small>Pronto</small></span>
+    </nav>
+
+    <div class="me">
+      <span class="av" aria-hidden="true">{{ initials() }}</span>
+      <div class="me-text">
+        <strong>{{ user()?.name }}</strong>
+        <small>{{ user()?.email }}</small>
+      </div>
+      <button class="icon-btn" type="button" (click)="logout()" aria-label="Cerrar sesión">
+        <svg lucideLogOut></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <router-outlet />
+  </main>
+</div>
